@@ -80,7 +80,7 @@ void usercontrol(void) {
      Y = Controller1.Axis4.position(percent);
      RightDrive.setVelocity( X - Y, pct) ;
      LeftDrive.setVelocity( X + Y , pct ); 
-     Brain.Screen.drawImageFromFile("black.jpg",12,0);
+   
   
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
