@@ -87,10 +87,6 @@ void autonomous(void) {
   autoncode ('f',12.4, 1.5,50  );
    autoncode('t',4,2,50  );
    autoncode('f',5,3,60);
- 
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
 }
 
 /*---------------------------------------------------------------------------*/
@@ -103,29 +99,24 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-int Y = 1 ;
-int X = 1 ;
-
 
 
 void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
-     RightDriveMotorA.spin(forward);
-     RightDriveMotorB.spin(forward);
-     LeftDriveMotorA.spin(fwd);
-     LeftDriveMotorB.spin(fwd);
-     X = Controller1.Axis3.position(percent);
-     Y = Controller1.Axis1.position(percent);
-     
-     RightDriveMotorA.setVelocity( Y*-1  - X, pct) ;
-      RightDriveMotorB.setVelocity( Y*-1 - X, pct) ;
-     LeftDriveMotorB.setVelocity( Y*-1 + X , pct ); 
-    LeftDriveMotorA.setVelocity( Y*-1 + X , pct ); 
-   
-  
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    int Y = 1 ; // Defines Y Varible 
+    int X = 1 ; // Defines X Varible 
+     RightDriveMotorA.spin(fwd); // Starts spinning motor Forward 
+     RightDriveMotorB.spin(fwd); // Starts spinning motor Forward 
+     LeftDriveMotorA.spin(fwd); // Starts spinning motor Forward 
+     LeftDriveMotorB.spin(fwd); // Starts spinning motor Forward 
+     X = Controller1.Axis3.position(percent); // sets varibles to percentage of Controler axis
+     Y = Controller1.Axis1.position(percent); // sets varibles to percentage of Controler axis
+    RightDriveMotorA.setVelocity( Y*-1  - X, pct) ; // Set motor speed to to difference of both axises 
+    RightDriveMotorB.setVelocity( Y*-1 - X, pct) ; // Set motor speed to to difference of both axises 
+    LeftDriveMotorB.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axises 
+    LeftDriveMotorA.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axise
+    wait(20, msec); // Sleep the task for a short amount of time to             // prevent wasted resources.
   }
 }
 
