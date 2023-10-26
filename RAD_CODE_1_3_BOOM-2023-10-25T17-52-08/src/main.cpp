@@ -16,6 +16,7 @@
 // LeftDriveMotorA      motor         9               
 // LeftDriveMotorB      motor         10              
 // CATA                 motor         5               
+// CATA_LIMIT           limit         A               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -54,6 +55,44 @@ void pre_auton(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+/*
+CATA LOGIC 
+ cmd 
+ P ~ Pull catapult to tennsioned position 
+ l ~ Launches the cata pult 
+ A ~ Runs Catapult in Autonomous 
+*/
+void CATALOGIC (char cmd, float speed) {
+  switch(cmd){
+    case 'p':{
+      CATA.spin(fwd,speed,pct);
+
+      if (CATA_LIMIT.pressing() ) {
+        CATA.stop();
+      }
+     // if (CATA.velocity(pct) < 40 ){
+      //  CATA.stop();
+      //}
+      break;
+    }
+    case 'l':{
+      CATA.spinFor(fwd, 3 , degrees );
+      break;
+    }
+    case 'a':{
+      CATA.spin(fwd,speed,pct);
+      if (CATA_LIMIT.pressing()){
+        CATA.stop();
+        CATA.setStopping(brake);
+        wait(1,sec);
+        CATA.spin(fwd,speed,pct);
+        
+      }
+      break;
+    }
+  }
+
+}
 
 void autoncode ( char cmd, float dis, float delay, float speed ){ 
   // cmd = direction, dis = distance/ andle, delay, how long code will run 
@@ -89,8 +128,8 @@ void autonomous(void) {
    autoncode('t',4,2,50  );
    autoncode('f',5,3,60);
   */
-  CATA.spin(fwd,80,pct); //fwd = pull CATA down 
-  
+  CATALOGIC('p',80);
+//  CATALOGIC('l',80);
 }
 
 /*---------------------------------------------------------------------------*/

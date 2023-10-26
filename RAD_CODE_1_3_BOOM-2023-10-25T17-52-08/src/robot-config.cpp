@@ -14,6 +14,7 @@ motor RightDriveMotorB = motor(PORT2, ratio6_1, false);
 motor LeftDriveMotorA = motor(PORT9, ratio6_1, false);
 motor LeftDriveMotorB = motor(PORT10, ratio6_1, false);
 motor CATA = motor(PORT5, ratio18_1, true);
+limit CATA_LIMIT = limit(Brain.ThreeWirePort.A);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

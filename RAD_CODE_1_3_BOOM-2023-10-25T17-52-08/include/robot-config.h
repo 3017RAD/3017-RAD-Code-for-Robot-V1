@@ -9,6 +9,7 @@ extern motor RightDriveMotorB;
 extern motor LeftDriveMotorA;
 extern motor LeftDriveMotorB;
 extern motor CATA;
+extern limit CATA_LIMIT;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
