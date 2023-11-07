@@ -62,6 +62,7 @@ CATA LOGIC
  l ~ Launches the cata pult 
  A ~ Runs Catapult in Autonomous 
 */
+/*
 void CATALOGIC (char cmd, float speed) {
   switch(cmd){
     case 'p':{
@@ -93,7 +94,7 @@ void CATALOGIC (char cmd, float speed) {
   }
 
 }
-
+*/
 void autoncode ( char cmd, float dis, float delay, float speed ){ 
   // cmd = direction, dis = distance/ andle, delay, how long code will run 
   RightDriveMotorA.setVelocity(speed,pct);
@@ -124,12 +125,22 @@ void autoncode ( char cmd, float dis, float delay, float speed ){
   }
 } 
 void autonomous(void) {
-  /*autoncode ('f',12.4, 1.5,50  );
-   autoncode('t',4,2,50  );
-   autoncode('f',5,3,60);
-  */
-  CATALOGIC('p',80);
-//  CATALOGIC('l',80);
+    int CATA_V = 100; //CATA Velocity 
+    float CATA_RT = .4;  //CATA Relod Time 
+    float CATA_LI = .3; //CATA Launch Interval 
+
+  CATA.spin(fwd,CATA_V,pct);
+  while(1 == 1) {
+  if(CATA_LIMIT.pressing()){
+  CATA.setVelocity(0,pct);
+  CATA.setStopping(brake);
+  wait(CATA_LI ,sec);
+  CATA.setVelocity(CATA_V,pct);
+  wait(CATA_RT,sec);
+  
+}
+}
+
 }
 
 /*---------------------------------------------------------------------------*/
@@ -146,9 +157,14 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+//Bug fixer
   while (1) {
+    int CATA_V = 100; //CATA Velocity 
+    
+
     int Y = 1 ; // Defines Y Varible 
     int X = 1 ; // Defines X Varible 
+
      RightDriveMotorA.spin(fwd); // Starts spinning motor Forward 
      RightDriveMotorB.spin(fwd); // Starts spinning motor Forward 
      LeftDriveMotorA.spin(fwd); // Starts spinning motor Forward 
@@ -159,6 +175,18 @@ void usercontrol(void) {
     RightDriveMotorB.setVelocity( Y*-1 - X, pct) ; // Set motor speed to to difference of both axises 
     LeftDriveMotorB.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axises 
     LeftDriveMotorA.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axise
+    //CATA 
+     if(CATA_LIMIT.pressing()){
+     CATA.setVelocity(0,pct);
+     CATA.setStopping(brake); 
+     
+     }
+     if (Controller1.ButtonR1.pressing()){
+      CATA.setVelocity(CATA_V ,pct);
+     }
+     if(CATA_LIMIT.pressing() == false){
+       CATA.spin(forward,CATA_V,pct);
+     }
     wait(20, msec); // Sleep the task for a short amount of time to             // prevent wasted resources.
   }
 }
