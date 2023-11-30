@@ -1,3 +1,15 @@
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// RightDriveMotorA     motor         16              
+// RightDriveMotorB     motor         17              
+// LeftDriveMotorA      motor         9               
+// LeftDriveMotorB      motor         10              
+// FlyWheel             motor         5               
+// Lift                 motor_group   11, 20          
+// RADinertial          inertial      14              
+// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -27,6 +39,14 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+
+void calibrate(){
+RADinertial.calibrate();
+if(RADinertial.isCalibrating()){
+Controller1.rumble(rumbleShort);
+  };
+}
+
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -123,13 +143,12 @@ void autoncode ( char cmd, float dis, float delay, float speed ){
   break;
   }
   }
-} 
+}  
 void autonomous(void) {
-    
-autoncode('f',3,1,50);
-autoncode('t',3,1,50); 
-autoncode('f',3,1,100);  
-
+Lift.setVelocity(100,pct); 
+autoncode('f',8,1,100);
+Lift.spinFor(fwd,2.3,rev);
+autoncode('f',-4,2,100);
 
 
 }
@@ -148,11 +167,14 @@ autoncode('f',3,1,100);
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  RightDriveMotorA.setReversed ( true ) ; 
+  RightDriveMotorB.setReversed ( true );
+  LeftDriveMotorA.setReversed ( true );
+  LeftDriveMotorB.setReversed( true );
 //Bug fixer
+Brain.Timer.reset();
   while (1) {
     int FlY_V = 100; //CATA Velocity 
-    
-
     int Y = 1 ; // Defines Y Varible 
     int X = 1 ; // Defines X Varible 
 
@@ -162,10 +184,10 @@ void usercontrol(void) {
      LeftDriveMotorB.spin(fwd); // Starts spinning motor Forward 
      X = Controller1.Axis3.position(percent); // sets varibles to percentage of Controler axis
      Y = Controller1.Axis1.position(percent); // sets varibles to percentage of Controler axis
-    RightDriveMotorA.setVelocity( Y*-1  - X, pct) ; // Set motor speed to to difference of both axises 
-    RightDriveMotorB.setVelocity( Y*-1 - X, pct) ; // Set motor speed to to difference of both axises 
-    LeftDriveMotorB.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axises 
-    LeftDriveMotorA.setVelocity( Y*-1 + X , pct ); // Set motor speed to to sum of both axise
+    RightDriveMotorA.setVelocity( Y   - X, pct) ; // Set motor speed to to difference of both axises 
+    RightDriveMotorB.setVelocity( Y - X, pct) ; // Set motor speed to to difference of both axises 
+    LeftDriveMotorB.setVelocity( Y + X , pct ); // Set motor speed to to sum of both axises 
+    LeftDriveMotorA.setVelocity( Y + X , pct ); // Set motor speed to to sum of both axise
     //CATA 
       if (Controller1.ButtonR1.pressing())
         {FlyWheel.spin(fwd,FlY_V,pct);}
@@ -181,7 +203,12 @@ void usercontrol(void) {
      else{
        Lift.stop();
      }
+    //Time Controll
+    
 
+    if (Brain.Timer.time(seconds) == 75 ){
+      Controller1.rumble(rumbleLong);
+    };
 
     wait(20, msec); // Sleep the task for a short amount of time to             // prevent wasted resources.
   }
