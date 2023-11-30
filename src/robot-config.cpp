@@ -17,7 +17,6 @@ motor FlyWheel = motor(PORT5, ratio18_1, false);
 motor LiftMotorA = motor(PORT11, ratio18_1, false);
 motor LiftMotorB = motor(PORT20, ratio18_1, true);
 motor_group Lift = motor_group(LiftMotorA, LiftMotorB);
-inertial RADinertial(PORT14);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

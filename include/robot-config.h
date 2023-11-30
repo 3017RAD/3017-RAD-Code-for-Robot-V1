@@ -10,7 +10,6 @@ extern motor LeftDriveMotorA;
 extern motor LeftDriveMotorB;
 extern motor FlyWheel;
 extern motor_group Lift;
-extern inertial RADinertial;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
