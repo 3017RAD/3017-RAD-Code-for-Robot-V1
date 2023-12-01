@@ -83,39 +83,8 @@ CATA LOGIC
  A ~ Runs Catapult in Autonomous 
 */
 /*
-void CATALOGIC (char cmd, float speed) {
-  switch(cmd){
-    case 'p':{
-      CATA.spin(fwd,speed,pct);
-
-      if (CATA_LIMIT.pressing() ) {
-        CATA.stop();
-      }
-     // if (CATA.velocity(pct) < 40 ){
-      //  CATA.stop();
-      //}
-      break;
-    }
-    case 'l':{
-      CATA.spinFor(fwd, 3 , degrees );
-      break;
-    }
-    case 'a':{
-      CATA.spin(fwd,speed,pct);
-      if (CATA_LIMIT.pressing()){
-        CATA.stop();
-        CATA.setStopping(brake);
-        wait(1,sec);
-        CATA.spin(fwd,speed,pct);
-        
-      }
-      break;
-    }
-  }
-
-}
 */
-void autoncode ( char cmd, float dis, float delay, float speed ){ 
+void autoncode ( char cmd, float dis, float delay, float speed ){ //Code that will run during auton driving 
   // cmd = direction, dis = distance/ andle, delay, how long code will run 
   RightDriveMotorA.setVelocity(speed,pct);
   RightDriveMotorB.setVelocity(speed,pct);
