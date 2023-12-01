@@ -220,17 +220,17 @@ Brain.Timer.reset();
     if (FlyWheel.velocity(pct) <= FlY_V -90 ) //Red Speed Identifyer Number
     {
        Brain.Screen.setFillColor( red );
-       Brain.Screen.drawRectangle( 10, 10, 400, 500 );
+       Brain.Screen.drawRectangle( 0, 0, 500, 700 );
     }
     else if(FlyWheel.velocity(pct) <= FlY_V -40) //Yellow Speed Identifyer Number
     {
        Brain.Screen.setFillColor( yellow );
-       Brain.Screen.drawRectangle(  10, 10, 100, 100  );
+       Brain.Screen.drawRectangle(  0, 0, 500, 700  );
     }
     else if(FlyWheel.velocity(pct) <= FlY_V ) //Green Speed Identifyer Number
     {
        Brain.Screen.setFillColor( green );
-       Brain.Screen.drawRectangle( 10, 10, 100, 100 );
+       Brain.Screen.drawRectangle( 0, 0, 500, 700 );
     }
     else if (FlyWheel.velocity(pct) <= FlY_V -10 )  {
       Brain.Screen.clearScreen( black );
